@@ -1,9 +1,11 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Typography } from "@mui/material";
+import FeaturedChallenges from "@/components/FeaturedChallenges";
+import { getFeaturedChallenges } from "@/service/challenge-service";
 
 export default function Home() {
   return (
     <Box>
-      <Typography varian'h2'h2"}>Featured</Typography>
+      <Typography variant={"h2"}>Featured</Typography>
       <FeaturedChallenges
         title={"Themes"}
         href={"home/challenges/themes"}
