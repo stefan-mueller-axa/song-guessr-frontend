@@ -5,13 +5,13 @@ export default function Home() {
     <Box>
       <Typography varian'h2'h2"}>Featured</Typography>
       <FeaturedChallenges
-        titl'Themes'es"}
-        hre'home/challenges/themes'es"}
+        title={"Themes"}
+        href={"home/challenges/themes"}
         featuredCards={getFeaturedChallenges().theme}
       />
       <FeaturedChallenges
-        titl'Artists'ts"}
-        hre'home/challenges/artists'ts"}
+        title={"Artists"}
+        href={"home/challenges/artists"}
         featuredCards={getFeaturedChallenges().artist}
       />
     </Box>

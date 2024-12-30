@@ -34,7 +34,6 @@ export default function Intro({ game, onInitializeNextStep }: Props) {
   return (
     <>
       <Typography>{"Ready Up!"}</Typography>
-      <Typography>{game.title}</Typography>
       <Typography>{game.numberOfRounds} Rounds</Typography>
       <Typography>{countDown}</Typography>
     </>

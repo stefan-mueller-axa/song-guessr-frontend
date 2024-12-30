@@ -1,10 +1,7 @@
-import { Box } from "@mui/material";
-import { useState } from "react";
-import {
-  createSinglePlayerGame,
-  initializeNextStep,
-} from "@/service/singe-player-game-service";
-import Intro from "@/components/Intro";
+import { Box, Typography } from '@mui/material'
+import { useState } from 'react'
+import { createSinglePlayerGame, initializeNextStep } from '@/service/singe-player-game-service'
+import Guessing from '@/components/Guessing'
 
 type Props = {
   challengeId: string;
@@ -17,14 +14,13 @@ export default function SinglePlayerGame({ challengeId }: Props) {
     initializeNextStep(game.id);
   };
 
-  let stepComponent = <></>;
-  switch (game.step) {
-    case "INTRO":
-      stepComponent = (
+  return (
+    <Box>
+      <Typography>{game.title}</Typography>
+      {game.step ==='INTRO'" && (
         <Intro game={game} onInitializeNextStep={onInitializeNextStep} />
-      );
-      break;
-  }
-
-  return <Box>{stepComponent}</Box>;
+      )}
+      {game.step === 'GUESSING' && <Guessing/>}
+    </Box>
+  );
 }
