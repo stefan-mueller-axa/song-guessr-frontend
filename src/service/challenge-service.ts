@@ -1,3 +1,5 @@
+import { SinglePlayerGame } from "@/service/singe-player-game-service";
+
 export type Challenge = {
   id: string;
   title: string;
@@ -22,10 +24,6 @@ const challenges: Challenge[] = [
     featured: true,
   },
 ];
-
-export function getChallenges() {
-  return challenges;
-}
 
 export function getChallengeById(id: string) {
   const foundChallenge = challenges.filter((challenge) => challenge.id === id);

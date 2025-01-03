@@ -31,6 +31,6 @@ export function getSongById(id: string) {
   if (foundSong.length > 0) {
     return foundSong[0];
   } else {
-    return null;
+    throw new Error("Song not found!");
   }
 }

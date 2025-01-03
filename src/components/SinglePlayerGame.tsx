@@ -12,19 +12,27 @@ type Props = {
 };
 
 export default function SinglePlayerGame({ challengeId }: Props) {
-  const [game] = useState(createSinglePlayerGame(challengeId));
+  const [game, setGame] = useState(createSinglePlayerGame(challengeId));
+  const [step, setStep] = useState<"INTRO" | "GUESSING" | "STATS">("INTRO");
 
   const onInitializeNextStep = () => {
-    initializeNextStep(game.id);
+    initializeNextStep(game);
+    setStep(game.step);
   };
 
   return (
     <Box>
       <Typography>{game.title}</Typography>
-      {game.step === "INTRO" && (
+      {step === "INTRO" && (
         <Intro game={game} onInitializeNextStep={onInitializeNextStep} />
       )}
-      {game.step === "GUESSING" && <Guessing />}
+      {step === "GUESSING" && (
+        <Guessing
+          game={game}
+          setGame={setGame}
+          onInitializeNextStep={onInitializeNextStep}
+        />
+      )}
     </Box>
   );
 }

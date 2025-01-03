@@ -7,7 +7,7 @@ import { getSongById } from "@/service/song-service";
 
 // const GUESSING_DURATION_IN_SECONDS = 15;
 // const INTRO_DURATION_IN_SECONDS = 10;
-const NUMBER_OF_ROUNDS = 8;
+const NUMBER_OF_ROUNDS = 3;
 
 export type SinglePlayerGame = {
   id: string;
@@ -74,43 +74,22 @@ export function createSinglePlayerGame(challengeId: string) {
   return newGame;
 }
 
-function getSingePlayerGameById(id: string) {
-  const foundGame = activeSingePlayerGames.filter((game) => game.id === id);
-
-  if (foundGame.length > 0) {
-    return foundGame[0];
-  } else {
-    return null;
-  }
-}
-
-export function initializeNextStep(id: string) {
-  const game = getSingePlayerGameById(id);
-  if (!game) {
-    throw new Error("Game not found.");
-  }
-
+export function initializeNextStep(game: SinglePlayerGame) {
   switch (game.step) {
-    case "INTRO":
-      return {
-        ...game,
-        step: "GUESSING",
-        guessing: {
-          currentRound: null,
-          pastRounds: [],
-        },
+    case "INTRO": {
+      game.step = "GUESSING";
+      game.guessing = {
+        currentRound: null,
+        pastRounds: [],
       };
+      break;
+    }
     default:
       alert("Not Implemented");
   }
 }
 
-export function nextGuessingRound(id: string) {
-  const game = getSingePlayerGameById(id);
-  if (!game) {
-    throw new Error("Game not found.");
-  }
-
+export function createNextGuessingRound(game: SinglePlayerGame) {
   const { guessing } = game;
 
   if (!guessing) {
@@ -139,6 +118,10 @@ export function nextGuessingRound(id: string) {
   }
 
   // Create new round
+  if (nextRoundNumber >= NUMBER_OF_ROUNDS) {
+    return "ALL_ROUNDS_FINISHED";
+  }
+
   guessing.currentRound = {
     number: nextRoundNumber,
     songId: getRandomSongFromChallenge({
@@ -149,20 +132,17 @@ export function nextGuessingRound(id: string) {
     guessedAt: null,
     tries: 0,
   };
+
+  return { ...game };
 }
 
 export function makeGuessAndReturnIsCorrect({
-  gameId,
+  game,
   guessedSongTitle,
 }: {
-  gameId: string;
+  game: SinglePlayerGame;
   guessedSongTitle: string;
 }) {
-  const game = getSingePlayerGameById(gameId);
-  if (!game) {
-    throw new Error("Game not found.");
-  }
-
   if (game.guessing === undefined || game.guessing.currentRound === null) {
     throw new Error("Game not in GUESSING Step or no currentRound!");
   }
@@ -176,8 +156,8 @@ export function makeGuessAndReturnIsCorrect({
   game.guessing.currentRound.tries += 1;
   if (guessedSongTitle === song.title) {
     game.guessing.currentRound.guessedAt = new Date();
-    return true;
+    return { game, isCorrect: true };
   } else {
-    return false;
+    return { game, isCorrect: false };
   }
 }
