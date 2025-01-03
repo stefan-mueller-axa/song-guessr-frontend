@@ -14,7 +14,7 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import { getSongById, Song } from "@/service/song-service";
 import Countdown from "@/components/countdown";
-import Image from "next/image";
+import RandomGif, { getRandomGifName } from "@/components/RandomGif";
 
 // Define the shake animation
 const shakeAnimation = keyframes`
@@ -30,6 +30,10 @@ type Props = {
   onInitializeNextStep: () => void;
 };
 
+const correctAudio = new Audio("/sound-effects/correct.m4a");
+const incorrectAudio = new Audio("/sound-effects/incorrect.m4a");
+const alarmAudio = new Audio("/sound-effects/alarm.m4a");
+
 export default function Guessing({
   game,
   setGame,
@@ -44,6 +48,7 @@ export default function Guessing({
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isFirstBox, setFirstBox] = useState(true);
   const [timeLimitReached, setTimeLimitReached] = useState(false);
+  const [gif, setGif] = useState("");
 
   const nextRound = useCallback(() => {
     playingAudio?.pause();
@@ -76,6 +81,7 @@ export default function Guessing({
         setFeedback(null); // Reset feedback
         setIsTransitioning(false); // End transition animation
         setTimeLimitReached(false);
+        setGif(getRandomGifName());
       },
       isFirstRound ? 0 : 500,
     ); // Match transition duration
@@ -103,6 +109,7 @@ export default function Guessing({
 
   useEffect(() => {
     if (timeLimitReached) {
+      alarmAudio.play();
       setTimeout(() => nextRound(), 1000);
     }
   }, [nextRound, timeLimitReached]);
@@ -116,9 +123,11 @@ export default function Guessing({
       setGame(guessResult.game);
       if (guessResult.isCorrect) {
         setFeedback("correct");
+        correctAudio.play();
         setTimeout(nextRound, 500); // Proceed to next round after feedback
       } else {
         setFeedback("incorrect");
+        incorrectAudio.play();
         setTimeout(() => setFeedback(null), 500); // Reset feedback
       }
     }
@@ -147,22 +156,21 @@ export default function Guessing({
         color: "white", // White text
       }}
     >
-      <Typography
-        variant="h5"
-        sx={{ fontWeight: "bold", mb: 2, color: "black" }}
-      >
+      <Typography variant="h5" sx={{ fontWeight: "bold", color: "black" }}>
         Guess The Song!
       </Typography>
+      <Typography variant={"subtitle1"} sx={{ color: "black", mb: 2 }}>
+        Song{" "}
+        {game.guessing?.currentRound?.number
+          ? game.guessing?.currentRound?.number + 1
+          : 1}{" "}
+        out of 10
+      </Typography>
+      <RandomGif gifName={gif} />
 
-      <Image
-        src={"/dancing-gifs/skeleton.gif"}
-        width={200}
-        height={200}
-        alt={"Dancing Object"}
-      ></Image>
       {!isTransitioning && (
         <Countdown
-          duration={15}
+          duration={30}
           onComplete={() => setTimeLimitReached(true)}
         ></Countdown>
       )}

@@ -38,11 +38,7 @@ export default function Intro({ game, onInitializeNextStep }: Props) {
       <Typography variant="h6" sx={{ color: "black" }}>
         {game.numberOfRounds} Rounds
       </Typography>
-      <Countdown
-        duration={COUNTDOWN}
-        isFrozen={false}
-        onComplete={onInitializeNextStep}
-      />
+      <Countdown duration={COUNTDOWN} onComplete={onInitializeNextStep} />
     </Box>
   );
 }
