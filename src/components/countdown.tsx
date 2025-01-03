@@ -24,12 +24,21 @@ export default function Countdown({ duration, onComplete }: CountdownProps) {
           return prev - 1;
         });
       }, 1000);
-
       return () => clearInterval(interval); // Cleanup on unmount
     } else {
       onComplete();
     }
   }, [onComplete, hasCompleted]);
 
-  return <Typography>{timeRemaining}</Typography>;
+  return (
+    <Typography
+      sx={{
+        mt: 2,
+        fontSize: "2rem",
+        color: timeRemaining === 0 ? "red" : "#0D47A1",
+      }}
+    >
+      {timeRemaining}
+    </Typography>
+  );
 }

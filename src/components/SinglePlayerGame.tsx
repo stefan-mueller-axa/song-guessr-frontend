@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { useState } from "react";
 import {
   createSinglePlayerGame,
@@ -22,8 +22,18 @@ export default function SinglePlayerGame({ challengeId }: Props) {
   };
 
   return (
-    <Box>
-      <Typography>{game.title}</Typography>
+    <Box
+      sx={{
+        background: "#0D47A1",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 4,
+        color: "white",
+      }}
+    >
       {step === "INTRO" && (
         <Intro game={game} onInitializeNextStep={onInitializeNextStep} />
       )}

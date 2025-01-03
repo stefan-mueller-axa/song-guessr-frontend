@@ -1,12 +1,28 @@
 import {
   createNextGuessingRound,
-  initializeNextStep,
   makeGuessAndReturnIsCorrect,
   SinglePlayerGame,
 } from "@/service/singe-player-game-service";
-import { Button, Input, InputLabel, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Input,
+  InputLabel,
+  Typography,
+  keyframes,
+} from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { getSongById, Song } from "@/service/song-service";
+import Countdown from "@/components/countdown";
+import Image from "next/image";
+
+// Define the shake animation
+const shakeAnimation = keyframes`
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-10px); }
+`;
 
 type Props = {
   game: SinglePlayerGame;
@@ -22,21 +38,47 @@ export default function Guessing({
   const [currentSong, setCurrentSong] = useState<Song | undefined>();
   const [currentGuess, setCurrentGuess] = useState("");
   const [playingAudio, setPlayingAudio] = useState<HTMLAudioElement>();
+  const [feedback, setFeedback] = useState<"correct" | "incorrect" | null>(
+    null,
+  );
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isFirstBox, setFirstBox] = useState(true);
+  const [timeLimitReached, setTimeLimitReached] = useState(false);
 
   const nextRound = useCallback(() => {
     playingAudio?.pause();
     const updatedGame = createNextGuessingRound(game);
 
-    if (updatedGame === "ALL_ROUNDS_FINISHED") {
+    const isLastRound = updatedGame === "ALL_ROUNDS_FINISHED";
+    const isFirstRound =
+      updatedGame !== "ALL_ROUNDS_FINISHED" &&
+      updatedGame.guessing?.currentRound?.number === 0;
+
+    if (isLastRound) {
       onInitializeNextStep();
       return;
     }
 
-    setGame(updatedGame);
+    if (isFirstRound) {
+      setFirstBox(true);
+    } else {
+      setFirstBox(false);
+    }
 
-    setCurrentSong(
-      getSongById(updatedGame.guessing?.currentRound?.songId ?? ""),
-    );
+    setIsTransitioning(true); // Start transition animation
+    setTimeout(
+      () => {
+        setGame(updatedGame);
+        setCurrentSong(
+          getSongById(updatedGame.guessing?.currentRound?.songId ?? ""),
+        );
+        setCurrentGuess("");
+        setFeedback(null); // Reset feedback
+        setIsTransitioning(false); // End transition animation
+        setTimeLimitReached(false);
+      },
+      isFirstRound ? 0 : 500,
+    ); // Match transition duration
   }, [game, onInitializeNextStep, playingAudio, setGame]);
 
   useEffect(() => {
@@ -59,6 +101,12 @@ export default function Guessing({
     }
   }, [currentSong]);
 
+  useEffect(() => {
+    if (timeLimitReached) {
+      setTimeout(() => nextRound(), 1000);
+    }
+  }, [nextRound, timeLimitReached]);
+
   const handleGuess = useCallback(() => {
     if (currentGuess) {
       const guessResult = makeGuessAndReturnIsCorrect({
@@ -67,28 +115,100 @@ export default function Guessing({
       });
       setGame(guessResult.game);
       if (guessResult.isCorrect) {
-        nextRound();
+        setFeedback("correct");
+        setTimeout(nextRound, 500); // Proceed to next round after feedback
+      } else {
+        setFeedback("incorrect");
+        setTimeout(() => setFeedback(null), 500); // Reset feedback
       }
     }
-  }, [currentGuess, game, setGame]);
+  }, [currentGuess, game, nextRound, setGame]);
 
   return (
-    <>
-      {game.guessing?.currentRound && (
-        <>
-          <Typography>{"Guess The Song!"}</Typography>
+    <Box
+      sx={{
+        position: "relative",
+        background: "white",
+        borderRadius: 4,
+        border:
+          feedback === "incorrect"
+            ? "solid red 4px"
+            : feedback === "correct"
+              ? "solid green 4px"
+              : "inherit",
+        padding: 3,
+        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.4)", // Black shadow
+        width: 400,
+        margin: "auto",
+        textAlign: "center",
+        transition: "scale 0.5s",
+        scale: isTransitioning && !isFirstBox ? 0 : 1,
+        animation: feedback === "incorrect" ? `${shakeAnimation} 0.5s` : "none", // Apply shake animation for incorrect guess
+        color: "white", // White text
+      }}
+    >
+      <Typography
+        variant="h5"
+        sx={{ fontWeight: "bold", mb: 2, color: "black" }}
+      >
+        Guess The Song!
+      </Typography>
 
-          <Typography>{currentSong?.title}</Typography>
-          <InputLabel>Your guess</InputLabel>
+      <Image
+        src={"/dancing-gifs/skeleton.gif"}
+        width={200}
+        height={200}
+        alt={"Dancing Object"}
+      ></Image>
+      {!isTransitioning && (
+        <Countdown
+          duration={15}
+          onComplete={() => setTimeLimitReached(true)}
+        ></Countdown>
+      )}
+      {timeLimitReached && (
+        <Typography variant={"body1"} sx={{ color: "red" }}>
+          Time limit reached!
+        </Typography>
+      )}
+      {!timeLimitReached && (
+        <>
+          <InputLabel sx={{ color: "black" }}>Your Guess</InputLabel>
           <Input
-            type={"text"}
-            onChange={(e) => {
-              setCurrentGuess(e.target.value);
+            fullWidth
+            disableUnderline={true}
+            disabled={timeLimitReached}
+            sx={{
+              border: "2px solid #0D47A1",
+              borderRadius: 2,
+              padding: 1,
+              fontSize: "1.1rem",
+              mb: 2,
+              color: "black",
+              transition: "border-color 0.3s",
             }}
-          ></Input>
-          <Button onClick={handleGuess}>Submit</Button>
+            onChange={(e) => setCurrentGuess(e.target.value)}
+            value={currentGuess}
+          />
+          <Button
+            variant="contained"
+            sx={{
+              background: "#0D47A1",
+              color: "white",
+              fontWeight: "bold",
+              fontSize: "1rem",
+              px: 3,
+              py: 1,
+              ":hover": {
+                background: "#1565C0",
+              },
+            }}
+            onClick={handleGuess}
+          >
+            Submit
+          </Button>
         </>
       )}
-    </>
+    </Box>
   );
 }
