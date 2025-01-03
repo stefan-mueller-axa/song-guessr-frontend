@@ -6,6 +6,7 @@ import {
 } from "@/service/singe-player-game-service";
 import Guessing from "@/components/Guessing";
 import Intro from "@/components/Intro";
+import Stats from "@/components/Stats";
 
 type Props = {
   challengeId: string;
@@ -33,6 +34,7 @@ export default function SinglePlayerGame({ challengeId }: Props) {
           onInitializeNextStep={onInitializeNextStep}
         />
       )}
+      {step === "STATS" && <Stats game={game} />}
     </Box>
   );
 }

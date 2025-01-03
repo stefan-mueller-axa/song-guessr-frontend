@@ -8,6 +8,7 @@ import { getSongById } from "@/service/song-service";
 // const GUESSING_DURATION_IN_SECONDS = 15;
 // const INTRO_DURATION_IN_SECONDS = 10;
 const NUMBER_OF_ROUNDS = 3;
+export const TIME_LIMIT_IN_MILLISECONDS = 1500;
 
 export type SinglePlayerGame = {
   id: string;
@@ -42,11 +43,13 @@ type Guessing = {
 
 type Stats = {
   totalPoints: number;
+  percentageGuessedCorrect: number;
+  averageTimeToGuessInMilliseconds: number;
   guessesStats: {
     timeUntilGuessed: number | "TIMER_EXPIRED";
     tries: number;
-    point: number;
-  };
+    points: number;
+  }[];
 };
 
 const activeSingePlayerGames: SinglePlayerGame[] = [];
@@ -75,6 +78,7 @@ export function createSinglePlayerGame(challengeId: string) {
 }
 
 export function initializeNextStep(game: SinglePlayerGame) {
+  console.log(game);
   switch (game.step) {
     case "INTRO": {
       game.step = "GUESSING";
@@ -82,6 +86,11 @@ export function initializeNextStep(game: SinglePlayerGame) {
         currentRound: null,
         pastRounds: [],
       };
+      break;
+    }
+    case "GUESSING": {
+      game.step = "STATS";
+      calculateAndSetStats(game);
       break;
     }
     default:
@@ -160,4 +169,52 @@ export function makeGuessAndReturnIsCorrect({
   } else {
     return { game, isCorrect: false };
   }
+}
+
+function calculateAndSetStats(game: SinglePlayerGame): void {
+  if (!game.guessing) {
+    throw new Error(
+      "The guessing attribute must be defined to calculate stats.",
+    );
+  }
+
+  const { pastRounds } = game.guessing;
+
+  if (!pastRounds || pastRounds.length === 0) {
+    throw new Error("No past rounds available to calculate stats.");
+  }
+
+  let totalPoints = 0;
+  let totalTimeToGuess = 0;
+  let correctGuesses = 0;
+
+  const guessesStats = pastRounds.map((round) => {
+    const { timeUntilGuessed, tries } = round;
+    let points = 0;
+
+    if (timeUntilGuessed !== "TIMER_EXPIRED") {
+      points = Math.max(1000 - timeUntilGuessed, 0); // Example points calculation based on time
+      totalTimeToGuess += timeUntilGuessed;
+      correctGuesses++;
+    }
+
+    totalPoints += points;
+    return {
+      timeUntilGuessed,
+      tries,
+      points,
+    };
+  });
+
+  const averageTimeToGuessInMilliseconds =
+    correctGuesses > 0 ? totalTimeToGuess / correctGuesses : 0;
+
+  const percentageGuessedCorrect = (correctGuesses / pastRounds.length) * 100;
+
+  game.stats = {
+    totalPoints,
+    percentageGuessedCorrect,
+    averageTimeToGuessInMilliseconds,
+    guessesStats,
+  };
 }
