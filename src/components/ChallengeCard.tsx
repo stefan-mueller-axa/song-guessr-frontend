@@ -1,6 +1,11 @@
-import { Card, CardContent, Typography } from "@mui/material";
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  Button,
+} from "@mui/material";
 import Link from "next/link";
-import Image from "next/image";
 
 export type FeaturedCardProps = {
   id: string;
@@ -9,28 +14,40 @@ export type FeaturedCardProps = {
 
 export default function ChallengeCard({ id, title }: FeaturedCardProps) {
   return (
-    <Link href={`/home/challenges/${id}`}>
-      <Card
-        sx={{
-          width: 200,
-          margin: 1,
-          "&:hover": {
-            cursor: "pointer",
-          },
-        }}
-      >
-        <Image
-          src={`/challenges/${id}.jpg`}
-          alt={title}
-          height={200}
-          width={200}
-        />
-        <CardContent>
-          <Typography variant="h6" component="div">
-            {title}
-          </Typography>
-        </CardContent>
-      </Card>
-    </Link>
+    <Card
+      sx={{
+        borderRadius: 4,
+        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.4)",
+        transition: "transform 0.3s",
+        "&:hover": { transform: "scale(1.05)" },
+      }}
+    >
+      <CardMedia
+        component="img"
+        height="140"
+        image={`/challenges/${id}.jpg`}
+        alt={title}
+      />
+      <CardContent>
+        <Typography variant="h6" sx={{ fontWeight: "bold", color: "black" }}>
+          {title}
+        </Typography>
+        <Link href={`/home/challenges/${id}`} passHref>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#0D47A1",
+              color: "white",
+              fontWeight: "bold",
+              marginTop: 2,
+              ":hover": { backgroundColor: "#1565C0" },
+            }}
+            fullWidth
+          >
+            Explore
+          </Button>
+        </Link>
+      </CardContent>
+    </Card>
   );
 }

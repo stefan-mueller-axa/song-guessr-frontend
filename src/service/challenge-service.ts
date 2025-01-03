@@ -15,7 +15,7 @@ const challenges: Challenge[] = [
     title: "00s Hits",
     type: "Theme",
     description:
-      'Step back into the unforgettable era of flip phones, MySpace, and iconic pop anthems! The "00s Hits" challenge is your ticket to reliving the biggest chart-toppers and hidden gems of the 2000s. From soulful ballads to dancefloor bangers, test your knowledge of the songs that defined a decade. Can you name them all? Play alone to prove you\'re the ultimate 00s music expert, or challenge your friends and settle who rules the playlist once and for all! 🎶✨',
+      'Step back into the unforgettable era of flip phones, MySpace, and iconic pop anthems! The "00s Hits" challenge is your ticket to reliving the biggest chart-toppers and hidden gems of the 2000s. Can you name them all? 🎶✨',
     availableSongs: [
       "0a34e782-2528-4fee-bbe1-a4b88d6f781a",
       "8e57e42e-96ae-4cbc-aaa7-a32d1407661e",

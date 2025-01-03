@@ -10,64 +10,116 @@ export default function ChallengePage() {
 
   const challenge = getChallengeById(id as string);
 
-  console.log(challenge);
-
-  if (!challenge) return <p>Challenge not found</p>;
-
-  return (
-    <Box>
+  if (!challenge) {
+    return (
       <Box
         sx={{
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          minHeight: "100vh",
-          padding: 2,
-          backgroundColor: "#f5f5f5",
+          height: "100vh",
+          backgroundColor: "#0D47A1",
+          color: "white",
         }}
       >
-        <Card sx={{ maxWidth: 400, width: "100%", boxShadow: 3 }}>
-          <Image
-            src={`/challenges/${challenge.id}.jpg`}
-            alt={"Test"}
-            width={400}
-            height={400}
-          />
-          <CardContent>
-            <Typography variant="h4" component="div" gutterBottom>
-              {challenge.title}
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
-              {challenge.title}
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: 3,
-              }}
-            >
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => redirect(`/play/${id}`)}
-              >
-                Play Alone
-              </Button>
-              <Button
-                variant="outlined"
-                color="secondary"
-                onClick={() =>
-                  alert(`Play with friends clicked for challenge ${id}`)
-                }
-              >
-                Play with Friends
-              </Button>
-            </Box>
-          </CardContent>
-        </Card>
+        <Typography variant="h4">Challenge not found</Typography>
       </Box>
+    );
+  }
+
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        padding: 4,
+        backgroundColor: "#0D47A1",
+        color: "white",
+      }}
+    >
+      <Card
+        sx={{
+          maxWidth: 400, // Increased width
+          width: "100%",
+          borderRadius: 4,
+          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.4)",
+        }}
+      >
+        <Image
+          src={`/challenges/${challenge.id}.jpg`}
+          alt={challenge.title}
+          width={400}
+          height={400}
+          style={{
+            borderTopLeftRadius: "16px",
+            borderTopRightRadius: "16px",
+          }}
+        />
+        <CardContent
+          sx={{
+            backgroundColor: "white",
+            borderBottomLeftRadius: 4,
+            borderBottomRightRadius: 4,
+            textAlign: "center",
+          }}
+        >
+          <Typography
+            variant="h4"
+            component="div"
+            sx={{ fontWeight: "bold", color: "#0D47A1", marginBottom: 2 }}
+          >
+            {challenge.title}
+          </Typography>
+          <Typography variant="body1" sx={{ color: "#555", marginBottom: 3 }}>
+            {challenge.description}
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              gap: 3, // Adjusted gap for spacing
+              marginTop: 3,
+            }}
+          >
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#0D47A1",
+                color: "white",
+                fontWeight: "bold",
+                paddingX: 4,
+                ":hover": {
+                  backgroundColor: "#1565C0",
+                },
+              }}
+              onClick={() => redirect(`/play/${id}`)}
+            >
+              Play Alone
+            </Button>
+            <Button
+              variant="outlined"
+              sx={{
+                borderColor: "#0D47A1",
+                color: "#0D47A1",
+                fontWeight: "bold",
+                paddingX: 4,
+                ":hover": {
+                  backgroundColor: "#1565C0",
+                  color: "white",
+                },
+              }}
+              onClick={() =>
+                alert(`Play with friends clicked for challenge ${id}`)
+              }
+            >
+              Play with Friends
+            </Button>
+          </Box>
+        </CardContent>
+      </Card>
     </Box>
   );
 }

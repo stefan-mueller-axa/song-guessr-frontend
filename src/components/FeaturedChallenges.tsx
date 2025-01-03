@@ -17,9 +17,18 @@ export default function FeaturedChallenges({
   featuredCards,
 }: FeaturedCardsSectionProps) {
   return (
-    <Box sx={{ overflow: "hidden", padding: 2 }}>
+    <Box sx={{ padding: 2 }}>
       <Link href={href}>
-        <Typography variant={"h5"}>{title}</Typography>
+        <Typography
+          variant="h5"
+          sx={{
+            color: "white",
+            fontWeight: "bold",
+            marginBottom: 2,
+          }}
+        >
+          {title}
+        </Typography>
       </Link>
       <Container>
         {featuredCards.map((item, index) => (
@@ -31,11 +40,3 @@ export default function FeaturedChallenges({
     </Box>
   );
 }
-
-export const sampleData = [
-  { id: "1", title: "Card 1", image: "https://via.placeholder.com/200x140" },
-  { id: "1", title: "Card 2", image: "https://via.placeholder.com/200x140" },
-  { id: "1", title: "Card 3", image: "https://via.placeholder.com/200x140" },
-  { id: "1", title: "Card 4", image: "https://via.placeholder.com/200x140" },
-  { id: "1", title: "Card 5", image: "https://via.placeholder.com/200x140" },
-];
