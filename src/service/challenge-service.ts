@@ -10,10 +10,10 @@ export type Challenge = {
 const challenges: Challenge[] = [
   {
     id: "666cbed9-88f3-4fda-8c64-0b08cfa11233",
-    title: "00s Hits",
+    title: "2000s Hits",
     type: "Theme",
     description:
-      'Step back into the unforgettable era of flip phones, MySpace, and iconic pop anthems! The "00s Hits" challenge is your ticket to reliving the biggest chart-toppers and hidden gems of the 2000s. Can you name them all? 🎶✨',
+      'Step back into the unforgettable era of flip phones, MySpace, and iconic pop anthems! The "2000s Hits" challenge is your ticket to reliving the biggest chart-toppers and hidden gems of the 2000s. Can you name them all? 🎶✨',
     availableSongs: [
       "0a34e782-2528-4fee-bbe1-a4b88d6f781a",
       "8e57e42e-96ae-4cbc-aaa7-a32d1407661e",

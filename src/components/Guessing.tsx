@@ -15,6 +15,7 @@ import { useCallback, useEffect, useState } from "react";
 import { getSongById, Song } from "@/service/song-service";
 import Countdown from "@/components/countdown";
 import RandomGif, { getRandomGifName } from "@/components/RandomGif";
+import { getChallengeById } from "@/service/challenge-service";
 
 // Define the shake animation
 const shakeAnimation = keyframes`
@@ -157,7 +158,7 @@ export default function Guessing({
       }}
     >
       <Typography variant="h5" sx={{ fontWeight: "bold", color: "black" }}>
-        Guess The Song!
+        {getChallengeById(game.challengeId)?.title ?? ""}
       </Typography>
       <Typography variant={"subtitle1"} sx={{ color: "black", mb: 2 }}>
         Song{" "}

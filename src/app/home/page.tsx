@@ -36,7 +36,7 @@ export default function Home() {
       <Grid container spacing={3} justifyContent="center">
         {[
           { title: "Featured Themes", items: featuredThemes },
-          { title: "Your Artists", items: featuredArtists },
+          { title: "Favorite Artists", items: featuredArtists },
         ].map((section, index) => (
           <Grid item xs={12} md={6} key={index}>
             <Typography
