@@ -80,6 +80,32 @@ const challenges: Challenge[] = [
     ],
     featured: true,
   },
+  {
+    id: "3320ad7b-4599-4cfc-93ad-25c8a14dcd08",
+    title: "Taylor Swift",
+    type: "Artist",
+    description:
+      "The year 2020 brought its own unforgettable soundtracks. From viral TikTok hits to chart-topping anthems, see if you can guess the biggest songs of this unique year. 🎧🌟",
+    availableSongs: [
+      "7abc1234-9628-4fee-bbe1-b3c99d6f345f",
+      "4e57f42e-76ae-4cbc-aaa7-c44d1408765d",
+      "3fabd456-d08f-412b-b4fb-b9d4d830987b",
+    ],
+    featured: true,
+  },
+  {
+    id: "46edcc99-be7e-4454-916f-628d7c0e6f76",
+    title: "Kanye West",
+    type: "Artist",
+    description:
+      "The year 2020 brought its own unforgettable soundtracks. From viral TikTok hits to chart-topping anthems, see if you can guess the biggest songs of this unique year. 🎧🌟",
+    availableSongs: [
+      "7abc1234-9628-4fee-bbe1-b3c99d6f345f",
+      "4e57f42e-76ae-4cbc-aaa7-c44d1408765d",
+      "3fabd456-d08f-412b-b4fb-b9d4d830987b",
+    ],
+    featured: true,
+  },
 ];
 
 export function getChallengeById(id: string) {

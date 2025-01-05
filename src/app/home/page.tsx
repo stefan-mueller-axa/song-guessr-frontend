@@ -31,7 +31,7 @@ export default function Home() {
           marginBottom: 4,
         }}
       >
-        Home
+        Welcome Back!
       </Typography>
       <Grid container spacing={3} justifyContent="center">
         {[
