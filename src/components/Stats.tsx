@@ -1,9 +1,15 @@
 import { SinglePlayerGame } from "@/service/singe-player-game-service";
 import { Box, Button, Typography } from "@mui/material";
 import Link from "next/link";
+import { useEffect } from "react";
+
+const awesomeAudio = new Audio("/sound-effects/awesome.m4a");
 
 export default function Stats({ game }: { game: SinglePlayerGame }) {
   const { stats } = game;
+  useEffect(() => {
+    awesomeAudio.play();
+  }, []);
   if (!stats) {
     return <Typography>Error: Stats not found</Typography>;
   }

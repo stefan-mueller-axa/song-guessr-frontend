@@ -50,6 +50,7 @@ export default function Guessing({
   const [isFirstBox, setFirstBox] = useState(true);
   const [timeLimitReached, setTimeLimitReached] = useState(false);
   const [gif, setGif] = useState("");
+  const [usedGifs, setUsedGifs] = useState<string[]>([]);
 
   const nextRound = useCallback(() => {
     playingAudio?.pause();
@@ -82,11 +83,22 @@ export default function Guessing({
         setFeedback(null); // Reset feedback
         setIsTransitioning(false); // End transition animation
         setTimeLimitReached(false);
-        setGif(getRandomGifName());
+        let gifInArray = true;
+        let tries = 0;
+        let randomGif = "";
+        while (gifInArray && tries < 100) {
+          randomGif = getRandomGifName();
+          gifInArray = usedGifs.includes(randomGif);
+          tries += 1;
+        }
+        if (usedGifs) usedGifs.push(randomGif);
+        setUsedGifs(...[usedGifs]);
+        console.log(usedGifs);
+        setGif(randomGif);
       },
       isFirstRound ? 0 : 500,
     ); // Match transition duration
-  }, [game, onInitializeNextStep, playingAudio, setGame]);
+  }, [game, onInitializeNextStep, playingAudio, setGame, usedGifs]);
 
   useEffect(() => {
     if (!game.guessing) {

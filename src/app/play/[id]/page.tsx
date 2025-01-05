@@ -9,7 +9,6 @@ export default function Play() {
   const mode: "SINGLE_PLAYER" | "MULTI_PLAYER" =
     (searchParams.get("mode") as "SINGLE_PLAYER" | "MULTI_PLAYER") ??
     "SINGLE_PLAYER";
-
   const challenge = getChallengeById(id + "");
 
   if (!challenge) return <p>Challenge not found</p>;

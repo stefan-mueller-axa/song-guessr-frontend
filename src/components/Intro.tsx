@@ -2,6 +2,7 @@ import { SinglePlayerGame } from "@/service/singe-player-game-service";
 import { Box, Typography } from "@mui/material";
 import Countdown from "@/components/countdown";
 import Image from "next/image";
+import { useEffect } from "react";
 
 const COUNTDOWN = 5;
 type Props = {
@@ -9,7 +10,13 @@ type Props = {
   onInitializeNextStep: () => void;
 };
 
+const countdownAudio = new Audio("/sound-effects/countdown.m4a");
+
 export default function Intro({ game, onInitializeNextStep }: Props) {
+  useEffect(() => {
+    countdownAudio.play();
+  }, []);
+
   return (
     <Box
       sx={{
@@ -31,7 +38,7 @@ export default function Intro({ game, onInitializeNextStep }: Props) {
       />
       <Typography
         variant="h4"
-        sx={{ mb: 2, fontWeight: "bold", color: "black" }} // White text
+        sx={{ mb: 2, mt: 2, fontWeight: "bold", color: "black" }} // White text
       >
         Ready Up!
       </Typography>
