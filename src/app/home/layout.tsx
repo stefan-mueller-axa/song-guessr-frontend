@@ -6,11 +6,14 @@ import {
   Typography,
   BottomNavigation,
   BottomNavigationAction,
+  IconButton,
 } from "@mui/material";
 import Link from "next/link";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import PeopleIcon from "@mui/icons-material/People";
 import AppsIcon from "@mui/icons-material/Apps";
+import React from "react";
+import { AccountCircle } from "@mui/icons-material";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -26,7 +29,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <AppBar
         position="static"
         sx={{
-          backgroundColor: "#0D47A1",
+          backgroundColor: "#1565C0",
           boxShadow: "0 4px 10px rgba(0, 0, 0, 0.4)",
         }}
       >
@@ -43,6 +46,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               Song Guessr
             </Link>
           </Typography>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <IconButton edge="end" color="inherit">
+              <AccountCircle />
+            </IconButton>
+          </Box>
         </Toolbar>
       </AppBar>
 

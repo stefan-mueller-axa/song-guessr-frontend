@@ -65,8 +65,9 @@ export default function Home() {
                     />
                     <CardContent>
                       <Typography
-                        variant="h6"
+                        variant="body1"
                         sx={{
+                          fontSize: 16,
                           color: "black",
                           fontWeight: "bold",
                         }}
