@@ -1,5 +1,3 @@
-import { SinglePlayerGame } from "@/service/singe-player-game-service";
-
 export type Challenge = {
   id: string;
   title: string;
@@ -20,6 +18,65 @@ const challenges: Challenge[] = [
       "0a34e782-2528-4fee-bbe1-a4b88d6f781a",
       "8e57e42e-96ae-4cbc-aaa7-a32d1407661e",
       "1fabec50-d08f-412b-b4fb-a9d4d830b591",
+      "c19be42d-75c8-45c6-9b5a-d19f5b5f6b6b",
+      "fb58d8a7-f7b9-4a10-8e90-df8912067e17",
+      "ff839348-dc82-4c15-bdaf-f874963c620e",
+      "bf86ebf2-51d9-4510-8d5d-48a7df554021",
+      "1dfa616f-09b6-4c01-b353-32bcbcc30eea",
+      "bef1fa3c-08e2-402a-8b25-e8335a09f6d5",
+      "b316d3ca-7164-498c-a2e3-70635b2825f0",
+    ],
+    featured: true,
+  },
+  {
+    id: "d2e4bf68-8f25-4b27-9d3d-68cb4c68e7b3",
+    title: "Classic Rock",
+    type: "Theme",
+    description:
+      'Turn up the volume and channel your inner rockstar! The "Classic Rock" challenge features legendary guitar riffs, powerful ballads, and timeless tracks from the golden age of rock. Are you ready to rock? 🎸🔥',
+    availableSongs: [
+      "f834e782-1234-4fcb-bbe1-a4b88d6f123a",
+      "0a45e12f-96ae-4cbc-aaa7-a32d1409876b",
+      "1fabc999-d08f-412b-b4fb-a9d4d987c876",
+    ],
+    featured: true,
+  },
+  {
+    id: "f71a4678-4eb1-45f7-8a12-ef7a3b6b45b8",
+    title: "One-Hit Wonders",
+    type: "Theme",
+    description:
+      "Celebrate the fleeting but unforgettable hits that dominated the charts once and left a mark forever. Can you identify these iconic one-hit wonders? 🌟🎶",
+    availableSongs: [
+      "a12d7865-4528-4fee-bbe1-a5c99d2fbc45",
+      "b3d4e42f-7645-4cbc-aaa7-c44d1409877c",
+      "c8def450-d08f-412b-b4fb-d999d830123a",
+    ],
+    featured: true,
+  },
+  {
+    id: "874cdef6-99e3-4fa8-aeb4-1f4d8309e76c",
+    title: "90s Nostalgia",
+    type: "Theme",
+    description:
+      "Relive the magic of grunge, boy bands, and the best dance tracks of the 90s. This challenge will transport you back to the golden age of MTV and Tamagotchis! 🎤💿",
+    availableSongs: [
+      "5ab4e782-3628-4fee-bbe1-a8c99d6f782b",
+      "9e65f32e-98ae-4cbc-aaa7-b33d1409865f",
+      "2fabc345-d08f-412b-b4fb-b6d4d850987c",
+    ],
+    featured: true,
+  },
+  {
+    id: "c19be42d-75c8-45c6-9b5a-d19f5b5f6b6b",
+    title: "Top Hits of 2020",
+    type: "Theme",
+    description:
+      "The year 2020 brought its own unforgettable soundtracks. From viral TikTok hits to chart-topping anthems, see if you can guess the biggest songs of this unique year. 🎧🌟",
+    availableSongs: [
+      "7abc1234-9628-4fee-bbe1-b3c99d6f345f",
+      "4e57f42e-76ae-4cbc-aaa7-c44d1408765d",
+      "3fabd456-d08f-412b-b4fb-b9d4d830987b",
     ],
     featured: true,
   },

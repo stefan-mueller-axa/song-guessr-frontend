@@ -34,8 +34,7 @@ export default function ChallengePage() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        minHeight: "100vh",
-        padding: 4,
+        padding: 0,
         backgroundColor: "#0D47A1",
         color: "white",
       }}

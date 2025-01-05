@@ -102,7 +102,7 @@ export default function Stats({ game }: { game: SinglePlayerGame }) {
             variant="h5"
             sx={{ fontWeight: "bold", color: "#0D47A1" }}
           >
-            {Math.round(stats.averageTimeToGuessInMilliseconds * 100) / 100} ms
+            {Math.round(stats.averageTimeToGuessInMilliseconds * 100) / 100}s
           </Typography>
         </Box>
       </Box>

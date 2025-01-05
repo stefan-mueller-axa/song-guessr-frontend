@@ -7,7 +7,7 @@ import { getSongById } from "@/service/song-service";
 
 // const GUESSING_DURATION_IN_SECONDS = 15;
 // const INTRO_DURATION_IN_SECONDS = 10;
-const NUMBER_OF_ROUNDS = 3;
+const NUMBER_OF_ROUNDS = 10;
 export const TIME_LIMIT_IN_MILLISECONDS = 1500;
 
 export type SinglePlayerGame = {
